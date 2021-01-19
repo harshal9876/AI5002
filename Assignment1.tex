@@ -1,0 +1,116 @@
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath} 
+\usepackage[english]{babel}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{mathtools}
+\usepackage{pgfplots}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{AI21MTECH02003}
+\lhead{AI5002 : Assignment 1}
+\rfoot{Page \thepage}
+
+\begin{document}
+\pgfmathdeclarefunction{gauss}{3}{%
+  \pgfmathparse{1/(#3*sqrt(2*pi))*exp(-((#1-#2)^2)/(2*#3^2))}%
+}
+
+\section{Problem Manual 6.6.1}
+\textbf{Question :} \\
+Let:
+
+  $$X1 \sim \mathcal{N}(0,\,1) and X2 \sim \mathcal{N}(0,\,1)$$
+ \\
+Evaluate the joint PDF of X1, X2, given by \\
+$$p_{X1,X2}(x1,x2) = p_{X1}(x1)p_{X2}(x2)$$ \\
+\textbf{Solution :} \\
+Normal distribution is defined as : \\
+ $$f(x)={\frac {1}{\sigma {\sqrt {2\pi }}}}e^{-{\frac {1}{2}}\left({\frac {x-\mu }{\sigma }}\right)^{2}}.............(1)$$ \\
+ 
+
+Where :\\
+$\hspace{1cm} \mu = Mean$\\
+$\hspace{5cm} \sigma = standard deviation$ \\
+Given by the curve :\\
+
+\begin{tikzpicture}
+\begin{axis}[
+  no markers, 
+  domain=0:6, 
+  samples=100,
+  ymin=0,
+  axis lines*=left, 
+  xlabel=$x$,
+  every axis y label/.style={at=(current axis.above origin),anchor=south},
+  every axis x label/.style={at=(current axis.right of origin),anchor=west},
+  height=5cm, 
+  width=12cm,
+  xtick=\empty, 
+  ytick=\empty,
+  enlargelimits=false, 
+  clip=false, 
+  axis on top,
+  grid = major,
+  hide y axis
+  ]
+
+ \addplot [very thick,cyan!50!black] {gauss(x, 3, 1)};
+
+\pgfmathsetmacro\valueA{gauss(1,3,1)}
+\pgfmathsetmacro\valueB{gauss(2,3,1)}
+\draw [gray] (axis cs:1,0) -- (axis cs:1,\valueA)
+    (axis cs:5,0) -- (axis cs:5,\valueA);
+\draw [gray] (axis cs:2,0) -- (axis cs:2,\valueB)
+    (axis cs:4,0) -- (axis cs:4,\valueB);
+\draw [yshift=1.4cm, latex-latex](axis cs:2, 0) -- node [fill=white] {$0.683$} (axis cs:4, 0);
+\draw [yshift=0.3cm, latex-latex](axis cs:1, 0) -- node [fill=white] {$0.954$} (axis cs:5, 0);
+
+\node[below] at (axis cs:1, 0)  {$\mu - 2\sigma$}; 
+\node[below] at (axis cs:2, 0)  {$\mu - \sigma$}; 
+\node[below] at (axis cs:3, 0)  {$\mu$}; 
+\end{axis}
+\end{tikzpicture}
+\\
+\\
+\\
+Given in the question that $\mu=0$ and $\sigma =1$ equation(1) transforms to \\
+ $$f(x)={\frac {1}{ {\sqrt {2\pi }}}}e^{-{\frac {x^2}{2}}}$$ \\
+ Similarly the individual PDF of $X1$ and $X2$ would be defined as : \\
+  $$p_{X1}(x1)={\frac {1}{ {\sqrt {2\pi }}}}e^{-{\frac {x1^2}{2}}}................(2)$$ \\
+ $$p_{X2}(x2)={\frac {1}{ {\sqrt {2\pi }}}}e^{-{\frac {x2^2}{2}}}..................(3)$$ \\
+ 
+ The joint probability distribution given by $p_{X1,X2}(x1,x2)$ is obtained by multiplying (1) and (2) is :\\
+ $$p_{X1,X2}(x1,x2) ={\frac {1}{ {{2\pi }}}}e^{-{\frac {(x1 + x2)^2}{2}}}$$
+ 
+\newpage
+\section{Problem Manual 6.6.2}
+\textbf{Question :} \\
+Let
+
+$$X1 = \sqrt{V}cos\theta$$ 
+$$X2 = \sqrt{V}sin\theta$$ 
+
+Evaluate the Jacobian 
+ $$J=\begin{vmatrix}
+\frac{\partial X1}{\partial V} & \frac{\partial X2}{\partial V} \\
+\frac{\partial X1}{\partial \theta} & \frac{\partial X2}{\partial \theta}
+\end{vmatrix}$$
+\textbf{Solution:} \\
+Using partial derivative
+
+$$\frac{\partial X1}{\partial V} =\frac{1}{2\sqrt{V}}cos\theta$$
+$$\frac{\partial X2}{\partial V} =\frac{1}{2\sqrt{V}}sin\theta$$
+$$\frac{\partial X1}{\partial \theta}=-\sqrt{V}sin\theta$$
+$$\frac{\partial X2}{\partial \theta}=\sqrt{V}cos\theta$$
+
+Substituting the resultanat Jacobian would be 
+$$J=
+\begin{vmatrix}
+\frac{1}{2\sqrt{V}}cos\theta & \frac{1}{2\sqrt{V}}sin\theta \\
+-\sqrt{V}sin\theta & \sqrt{V}cos\theta
+\end{vmatrix}$$
+\end{document}
