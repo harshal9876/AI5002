@@ -72,3 +72,15 @@ plt.title('variation of joint PDF $p_{X1,X2}(x1,x2)$')
 plt.xlabel('Range of variation of x1,x2')
 plt.ylabel('$p_{X1,X2}(x1,x2)$')
 plt.grid()
+
+# Probman 6.2.2
+
+print("Finding the value of the jacobian at a point ")
+v = input(" Give an input for V : ")
+v=np.sqrt(float(v))
+theta = input(' Give an input for theta')
+s_theta = math.sin(float(theta))
+c_theta = math.cos(float(theta))
+arr = np.array([[(c_theta/(2*v)), (s_theta/(2*v))], [-v*s_theta, v*c_theta]])
+print("The Jacobian is ")
+print(arr)
