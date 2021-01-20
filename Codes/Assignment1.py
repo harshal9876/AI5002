@@ -75,12 +75,17 @@ plt.grid()
 
 # Probman 6.2.2
 
+# Taking inputs for V and theta
+
 print("Finding the value of the jacobian at a point ")
 v = input(" Give an input for V : ")
 v=np.sqrt(float(v))
 theta = input(' Give an input for theta')
 s_theta = math.sin(float(theta))
 c_theta = math.cos(float(theta))
+
+#Calculating Jacobian Matrix
+
 arr = np.array([[(c_theta/(2*v)), (s_theta/(2*v))], [-v*s_theta, v*c_theta]])
 print("The Jacobian is ")
 print(arr)
