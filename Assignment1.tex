@@ -1,4 +1,3 @@
-
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath} 
@@ -6,6 +5,8 @@
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{fancyhdr}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
 \usepackage{mathtools}
 \usepackage{pgfplots}
 \pagestyle{fancy}
@@ -19,7 +20,7 @@
   \pgfmathparse{1/(#3*sqrt(2*pi))*exp(-((#1-#2)^2)/(2*#3^2))}%
 }
 
-\section{Problem Manual 6.6.1}
+\section{Problem Manual 6.2.1}
 \textbf{Question :} \\
 Let:
 
@@ -29,12 +30,12 @@ Evaluate the joint PDF of X1, X2, given by \\
 $$p_{X1,X2}(x1,x2) = p_{X1}(x1)p_{X2}(x2)$$ \\
 \textbf{Solution :} \\
 Normal distribution is defined as : \\
- $$f(x)={\frac {1}{\sigma {\sqrt {2\pi }}}}e^{-{\frac {1}{2}}\left({\frac {x-\mu }{\sigma }}\right)^{2}}.............(1)$$ \\
+ $$f(x)={\frac {1}{\sigma {\sqrt {2\pi }}}}e^{-{\frac {1}{2}}\left({\frac {x - \mu }{\sigma }}\right)^{2}}.............(1)$$ \\
  
 
 Where :\\
 $\hspace{1cm} \mu = Mean$\\
-$\hspace{5cm} \sigma = standard deviation$ \\
+$\hspace{5cm} \sigma$ = Standard deviation \\
 Given by the curve :\\
 
 \begin{tikzpicture}
@@ -79,15 +80,75 @@ Given by the curve :\\
 \\
 Given in the question that $\mu=0$ and $\sigma =1$ equation(1) transforms to \\
  $$f(x)={\frac {1}{ {\sqrt {2\pi }}}}e^{-{\frac {x^2}{2}}}$$ \\
+ \\
  Similarly the individual PDF of $X1$ and $X2$ would be defined as : \\
+ \\
   $$p_{X1}(x1)={\frac {1}{ {\sqrt {2\pi }}}}e^{-{\frac {x1^2}{2}}}................(2)$$ \\
+  \\
  $$p_{X2}(x2)={\frac {1}{ {\sqrt {2\pi }}}}e^{-{\frac {x2^2}{2}}}..................(3)$$ \\
  
  The joint probability distribution given by $p_{X1,X2}(x1,x2)$ is obtained by multiplying (1) and (2) is :\\
- $$p_{X1,X2}(x1,x2) ={\frac {1}{ {{2\pi }}}}e^{-{\frac {(x1 + x2)^2}{2}}}$$
+ \\
+ $$p_{X1,X2}(x1,x2) ={\frac {1}{ {{2\pi }}}}e^{-{\frac {(x1 + x2)^2}{2}}}.............(4)$$\\
+ \\
+ Graphically equivalent to :\\
+ \\
+\includegraphics{images/image2.png}\\
+\\
+\url{https://github.com/harshal9876/AI5002/blob/main/Joint_distribution_assignment_1(1).png}\\
+\\
+\\
+\\
+\\
+\\
+Joint Bi-variable Gaussian distribution is given as :\\
+\\
+ $$p_{X1,X2}(x1,x2) = \frac{1}{2\pi\sigma_{1}\sigma_{2}\sqrt{1-\rho^2}}\exp{-\frac{z}{2(1-\rho^2)}}...........(5)$$\\
+ Where \\
+ \\
+ $z = \frac{(x_{1}-\mu_{1})^2}{\sigma_{1}^2}+\frac{(x_{2}-\mu_{2})^2}{\sigma_{2}^2} -\frac{2\rho(x_{1}-\mu_{1})((x_{2}-\mu_{2}))}{\sigma_{1}\sigma_{2}} $\\
+ and \\
  
+ $\rho = cor(x1,x2) = \frac{V_{12}}{\sigma_{1}\sigma_{2}}$\\
+ where :\\
+ \\
+ $x1,x2 = random variables$\\
+ $\mu_{1}$ = Mean of random variable X1\\
+ $\mu_{2}$ = Mean of random variable X2\\
+ $\sigma_{1}$ = Standard deviation of random variable X1\\
+ $\sigma_{2}$ = Standard deviation of random variable X2\\
+ $V_{12}=covariance(x1,x2)$\\
+ \\
+ For a Bivariable Normal distribution having independent random variables\\
+ $\mu_{1} = \mu_{2} = 0$\\
+ $\sigma_{1} = \sigma_{2} = 1$\\
+ $V_{12} = 0$\\
+ \\
+ The equation transforms to :\\
+ $z = x_{1}^2 + x_{2}^2$ \\
+ \\
+Thus (4) transforms to \\
+\\
+ $$p_{X1,X2}(x1,x2) ={\frac {1}{ {{2\pi }}}}e^{-{\frac {(x1 + x2)^2}{2}}}$$\\
+\\
+\\
+\\
+\\
+Graphically equivalent to\\
+\includegraphics{image1.png}
+\\
+\\
+Source:\url{https://github.com/harshal9876/AI5002/blob/main/Joint_distribution_Assignment_1.png}\\
+\\
+Which is the same as of equation (4) , thus proving that for two normal random distribution 
+\\
+\\
+$$p_{X1,X2}(x1,x2) = p_{X1}(x1)p_{X2}(x2)$$
+
+
+
 \newpage
-\section{Problem Manual 6.6.2}
+\section{Problem Manual 6.2.2}
 \textbf{Question :} \\
 Let
 
