@@ -34,7 +34,8 @@ def normal_distribution(x,mean, sigma):
 # having a covariance of matrix 'cov'
 
 def multivar_gaussian_distribution(x_1, x_2, mean_1, mean_2, sigma_1, sigma_2 ,cov):
-    ro = cov[0,1]/(sigma_1*sigma_2)
+    #In the next line if the random variables are dependent then 0 (zero) would be replaced by cov[0,1]
+    ro = 0/(sigma_1*sigma_2)
     dev_1 = x_1 - mean_1
     dev_2 = x_2 - mean_2
     z = (dev_1/sigma_1)**2+(dev_2/sigma_2)**2-((2*ro*dev_1*dev_2)/(sigma_1*sigma_2))
