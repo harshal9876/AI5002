@@ -1,0 +1,72 @@
+\documentclass[journal,12pt,twocolumn]{IEEEtran}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\urlstyle{same}
+\title{Assignment 4}
+\author{Harshal Verma\\
+AI21MTECH02003}
+\date{February 2021}
+\begin{document}
+\maketitle
+\section{Section 3 problem 5}
+\textbf{Problem}: Find the mean number of heads in three tosses of a fair coin.
+\\
+\\
+\textbf{Solution}:\\
+Let \textbf{X} : No of heads \\
+We toss 3 coins simultaneously \\
+The possible number of heads we can get is 0 Heads,1 Heads, 2 Heads, 3 Heads \\
+So the possible values \textbf{X} can take is 0,1,2,3 .\\
+\\
+Tabulating 
+\begin{center}
+\begin{tabular}{|c|l|c|c|}
+\hline
+X & Outcomes                & Number of outcomes & P(X) &  
+\hline
+0 & (T,T,T)                & 1                  & 1/8  &  
+\hline
+1 & (T,H,T),(T,T,H),(H,T,T) & 3                  & 3/8  &  
+\hline
+2 & (H,H,T),(H,T,H),(T,H,H) & 3                  & 3/8  &  
+\hline
+3 & (H,H,H)                 & 1                  & 1/8  & 
+\hline
+\end{tabular}
+\end{center}
+\\
+\\
+So the probability distribution is :\\
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+X & 0 & 1 & 2 & 3 &
+\hline
+P(X) & 1/8 & 3/8 & 3/8 & 1/8 &
+\hline
+\end{tabular}
+\end{center}
+\\
+The mean number is given by :\\
+\begin{align*}
+\mu = E(x) &= \sum_{i=1}^{n} x_{i}p_{i} \\ 
+&=0\times\frac{1}{8} + 1\times\frac{3}{8} + 2\times\frac{3}{8} + 3\times\frac{1}{8} \\
+&=0+\frac{3}{8} + \frac{6}{8} + \frac{3}{8}\\
+&=\frac{12}{8}\\
+&=\frac{3}{2}\\
+&=1.5 \\
+\end{align*}
+Mean number of heads in a three coin toss is 1.5 .
+
+\\
+\begin{tcolorbox}
+Code source: \url{https://github.com/harshal9876/AI5002/blob/main/Assignment_4/Codes/Assignment_4.py}
+\end{tcolorbox}
+\\
+
+\end{document}
+
+
