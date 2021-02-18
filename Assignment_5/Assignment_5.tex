@@ -1,0 +1,53 @@
+\documentclass[journal,12pt,twocolumn]{IEEEtran}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\urlstyle{same}
+\title{Assignment }
+\author{Harshal Verma\\
+AI21MTECH02003}
+\date{February 2021}
+\begin{document}
+\maketitle
+\section{Prob 4.6}
+Problem: Find the probability of throwing at most 2 sixes in 6 throws of a single die.\\
+\\
+\\
+\textbf{Solution}:\\
+Let \textbf{X} :
+Throwing a die is a binomial distribution\\
+So X has a binomial distribution given by \\
+P( X = x ) = $^{n}C_x q^{n-x} p^x $\\
+Where : \\
+n = Number of times the die is thrown \\
+p = Probability of getting a six = $\frac{1}{6}$\\
+q = 1-p = 1- $\frac{1}{6}$ = $\frac{5}{6}$ \\
+Hence \\
+P( X = x ) = $^{6}C_x (\frac{5}{6})^{6-x} (\frac{1}{6})^x $\\
+We need to find the probability of throwing at most 2 sixes in 6 throws of a single die \\
+i.e $P(X \leq 2)$ : \\
+\begin{align*}
+P(X \leq 2) &= P(X = 0) + P(X = 1) + P(X = 2) \\
+&= ^{6}C_0 (\frac{5}{6})^{6} (\frac{1}{6})^0 + ^{6}C_1 (\frac{5}{6})^{5} (\frac{1}{6})^1 + ^{6}C_2 (\frac{5}{6})^{4} (\frac{1}{6})^2\\
+&= 1\times1\times(\frac{5}{6})^6 + 6 \times \frac{1}{6} \times (\frac{5}{6})^5 + 15 \times (\frac{1}{6})^2 \times (\frac{5}{6})^4 \\
+&= (\frac{5}{6})^6 + (\frac{5}{6})^5 + 15\times \frac{1}{36} \times (\frac{5}{6})^4 \\
+&= (\frac{5}{6})^6 + (\frac{5}{6})^5 + \frac{5}{12} \times (\frac{5}{6})^4 \\
+&= (\frac{5}{6})^4 \times ((\frac{5}{6})^2 + \frac{5}{6} + \frac{5}{12})\\
+&= (\frac{5}{6})^4 \times (\frac{25}{36} + \frac{5}{6} + \frac{5}{12})\\
+&= (\frac{5}{6})^4 \times (\frac{25+ 30 +15}{36}) \\
+&= (\frac{5}{6})^4 \times (\frac{70}{36})\\
+&= (\frac{5}{6})^4 \times (\frac{35}{18})\\
+&= 0.9377\\
+\end{align*}
+
+Thus the required probability is 0.9377 \\
+\\
+\begin{tcolorbox}
+Code source: \url{https://github.com/harshal9876/AI5002/blob/main/Assignment_5/Codes/Assignment_5.py}
+\end{tcolorbox}
+\\
+\end{document}
+
+
