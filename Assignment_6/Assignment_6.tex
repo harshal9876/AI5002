@@ -1,0 +1,111 @@
+\documentclass[journal,12pt,twocolumn]{IEEEtran}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\urlstyle{same}
+\title{Assignment 6 }
+\author{Harshal Verma\\
+AI21MTECH02003}
+\date{March 2021}
+\begin{document}
+\maketitle
+\section{Prob 5.9}
+Problem: Suppose that two cards are drawn at random
+from a deck of cards. Let X be the number of
+aces obtained. Then the value of E(X) is .\\
+(a) $\frac{37}{221}$\\
+(b) $\frac{5}{13}$\\
+(c) $\frac{1}{13}$\\
+(d) $\frac{2}{13}$\\
+\\
+\\
+\\
+\textbf{Solution}:\\
+Let \textbf{X} : be the number of aces obtained \\
+we can get 0,1 or 2 aces \\
+So the value of x is 0,1 or 2 \\
+\\
+Total number of ways to draw 2 cards out of 52 is :
+\begin{align*}
+Total ways &= ^{52}C_2\\
+           &= 1326
+\end{align*}
+ \\
+P(X=0) : probability of getting zero aces \\
+Number of ways of getting zero aces \\
+ = Number of ways to select 2 cards out of non ace card \\
+ = Number of ways to select 2 cards out of (52-4) , 48 cards \\
+ =$^{48}C_2$ \\
+ =1128 \\
+ \\
+ \begin{align*}
+ P(X = 0) &= \frac{Number of ways to get zero aces}{Total number of ways} \\
+          &= \frac{1128}{1326} \\
+ \end{align*}
+ P(X = 1) \\
+ i..e probability of getting 1 aces \\
+ Number of ways to get 1 aces \\
+\begin{align*}
+    &= Number of ways to select 1 ace out of 4 ace cards \times Number of ways to select 1 card from 48 ace cards \\
+    &= ^{4}C_1 \times ^{48}C_1 \\
+    &= 4\times 48 \\
+    &= 192 \\
+\end{align*}
+\\
+ \begin{align*}
+     P(X = 1) &= \frac{Number of ways to get 1 aces}{Total number of ways} \\
+     &= \frac{192}{1326} \\
+ \end{align*}
+ \\
+  P(X = 2) \\
+ i..e probability of getting 2 aces \\
+ Number of ways to get 2 aces \\
+\begin{align*}
+    &= Number of ways to select 2 ace out of 4 ace cards  \\
+    &= 4^C_2 \times  \\
+    &= 6
+\end{align*}
+\\
+\begin{align*}
+     P(X = 2) &= \frac{Number of ways to get 2 aces}{Total number of ways} \\
+     &= \frac{6}{1326} \\
+\end{align*}
+ \\
+ \\
+ \\
+ \\
+ \\
+ \\
+ The probability distribution is  :
+ \\
+
+\begin{tabular}{|c|c|c|c|}
+\hline
+X & 0 & 1 & 2 &  
+\hline
+P(X) & $\frac{1128}{1326}$ & $\frac{192}{1326}$ & $\frac{6}{1326}$ &  
+\hline
+\end{tabular}
+\\
+\\
+The expected value E(X) is given by \\
+\begin{align*}
+    \mu =& E(X) = \sum_{i= 1}^{n} x_i p_i \\
+        =& 0\times\frac{1128}{1326} + 1\times\frac{192}{1326} +2\times \frac{6}{1326} \\
+        =& 0 + \frac{192+12}{1326} \\
+        =& \frac{204}{13260} \\
+        =& \frac{2}{13}
+\end{align*}
+ 
+ \\
+ Thus option D stating the estimation of getting aces when drawing 2 cards from a deck of cards is $\frac{2}{13}$
+\begin{tcolorbox}
+Code source: \url{https://github.com/harshal9876/AI5002/blob/main/Assignment_6/Codes/Assignment_6.py}
+\end{tcolorbox}
+\\
+\end{document}
+
+
+
