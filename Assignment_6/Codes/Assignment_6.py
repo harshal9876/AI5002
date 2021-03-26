@@ -25,7 +25,7 @@ for j in range(iter):
   num = 0
   for i in range(2):
     Choosen_cards.append(Deck_of_cards[random.randint(0,55)])
-    num =num+count(Choosen_cards[i],'A')
+    num =num+count(Choosen_cards[i] , 'A')
   occ_hist.append(num)
 
 #Generating histogram
