@@ -3,6 +3,7 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage[english]{babel}
+\newtheorem{proof}{PROOF}
 \usepackage{hyperref}
 \usepackage{tcolorbox}
 \urlstyle{same}
@@ -16,21 +17,24 @@ AI21MTECH02003}
 Problem: Consider a dice with the property that the probability of a face with n dots showing up is proportional to n. The probability of the face with three dots showing up is ?\\
 \\
 \textbf{Solution}: Given that the dice with the
- property that the probability of a face with n dots showing up is proportional to n , let the proportionality constant be 'c , then tabulating :
+ property that the probability of a face with n dots showing up is proportional to n , let the proportionality constant be 'c' .\\
+ $\Pr(N)$ is proportional to n
+ where n=\{1, 2, 3, 4, 5, 6\} is random variable.\\
+Then $\Pr(n) = n \times c $, tabulating the outcomes : 
 \\
 \begin{center}
 \begin{tabular}{ |c | c | c | c | c | c | c |}
 \hline
-X     & 1 & 2 & 3 & 4 & 5 & 6 \\
+n     & 1 & 2 & 3 & 4 & 5 & 6 \\
 \hline
-Pr(X) & c & 2c&3c &4c & 5c & 6c\\
+$\Pr(N = n ) = n \times c$ & 1c & 2c&3c &4c & 5c & 6c\\
 \hline
 \end{tabular}
 \end{center}
 \smallskip
 As the sum of all probability is equal to 1\\
 \begin{align*}
-\Sigma Pr(X) &= 1\\
+\Sigma_{N=n} \Pr(N) &= 1\\
 c + 2c + 3c + 4c + 5c + 6c &= 1\\
 21c &= 1\\
 c &= \frac{1}{21}\\
@@ -39,12 +43,13 @@ c &= \frac{1}{21}\\
 \text{The probability of three dots showing up is 3c} \\
 \text{Giving the probability to be:}\\
 \begin{align*}
-&= 3 \times c\\
+\Pr(N=3) &= 3 \times c\\
 &= 3\times\frac{1}{21}\\
 &= \frac{3}{21}\\
 &= \frac{1}{7}\\
 &= 0.1428   
 \end{align*}
+The probability of getting a face with three dots showing up is 0.1428
 \samllskip
 \begin{figure}[htp]
     \centering
