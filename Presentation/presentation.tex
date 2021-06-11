@@ -1,0 +1,567 @@
+\documentclass{beamer}
+\usepackage{listings}
+\lstset{
+%language=C,
+frame=single, 
+breaklines=true,
+columns=fullflexible
+}
+\usepackage{blkarray}
+\usepackage{subcaption}
+\usepackage{url}
+\usepackage{tikz}
+\usepackage{tkz-euclide} % loads  TikZ and tkz-base
+%\usetkzobj{all}
+\usetikzlibrary{calc,math}
+\usepackage{float}
+\newcommand\norm[1]{\left\lVert#1\right\rVert}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\usepackage[export]{adjustbox}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning}
+\usetheme{Boadilla}
+\providecommand{\pr}[1]{\ensuremath{\Pr\left(#1\right)}}
+\providecommand{\brak}[1]{\ensuremath{\left(#1\right)}}
+\providecommand{\sbrak}[1]{\ensuremath{{}\left[#1\right]}}
+\DeclareMathOperator*{\max}{max}
+\logo{\includegraphics[height=0.8cm, center]{iith-logo}}
+\title[Bayesian Estimates of Transmission Line]{Bayesian Estimates of Transmission Line Outage
+Rates That Consider Line Dependencies}
+
+\subtitle{IEEE TRANSACTIONS ON POWER SYSTEMS, VOL. 36, NO. 2, MARCH 2021}
+
+\author[Kai Zhou, Zhaoyu Wang, Ian Dobson]
+{Kai Zhou \and  James R. Cruise \and  Chris J. Dent  \and  Ian Dobson \and  Louis Wehenkel \and Zhaoyu Wang \and Amy L. Wilson }
+
+\date[\today]
+{AI5002\\ Research Paper Presentation\\ Harshal Verma (AI21MTECH02003)}
+
+
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\begin{document}
+
+\frame{\titlepage}
+\begin{frame}{Abstract}
+\begin{block}
+
+\begin{itemize}
+    \item Transmission line outages are inevitable for a power system and  the data is limited.
+    \item Paper proposed a Bayesian hierarchical model that leverages line dependencies to better estimate outage rates of individual transmission lines from limited outage data.
+    \item The Bayesian model produces more accurate individual line outage rates, as well as estimates of the uncertainty of these rates even when the available data is less.
+    
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Table of Contents}
+\tableofcontents
+\end{frame}
+
+
+
+\section{Introduction}
+
+\begin{frame}
+\frametitle{Introduction}
+\begin{block}{}
+\begin{itemize}
+  \item Transmission line outage rates are foundational for
+many reliability calculations, but in historical data the
+counts of outages for the more reliable lines are low, and estimated individual line outage rates are highly uncertain.
+  \item Ways in which individual transmission lines are partially similar, including their length, rating, geographical location, and their proximity. 
+  \item This paper leverage these partial similarities with a
+Bayesian hierarchical method to improve the estimation of line
+outage rates from historical data.
+  
+\end{itemize}
+\begin{flushright}
+...continue
+\end{flushright}
+
+\end{block}
+
+
+\end{frame}
+\begin{frame}{Introduction}
+\begin{block}{}
+\begin{itemize}
+    \item The conventional method of estimating annual line outages have high variance and for many line outages we have very less data 
+    \item One method to mitigate the problem of data is to group lines by line voltages, length, area etc.
+    \item To exploit the partial
+dependencies of line outage rates, paper proposes a Bayesian hierarchical method to estimate outage rates of individual transmission lines. In particular, the method can leverage the multiple partial dependencies in line length, rating, network proximity,
+and geographical area to give better outage rates of individual
+lines. 
+\end{itemize}
+\begin{flushright}
+...continue
+\end{flushright}
+
+\end{block}
+\end{frame}
+
+
+
+\begin{frame}{Introduction}
+\begin{block}{}
+The model proposes :
+\begin{itemize}
+    \item Estimates annual outage rates for individual transmission lines more accurately by leveraging partial similarities between line 
+    \item Has performance better than the conventional method of
+simply dividing the number of outages by the number of
+years observed, especially when the data is limited.
+    \item Instead of pooling lines with one characteristic in common, gives a way to combine multiple partial similarities
+between lines. 
+     
+      \item  Shows that line length and rated voltage correlate with line
+outage rate, but the correlation is not strong.
+      
+\end{itemize}
+
+\end{block}
+\end{frame}
+
+\section{Literature review}
+\begin{frame}{Literature review}
+\begin{block}{}
+\begin{itemize}
+    \item Bayesian approaches encode uncertainty in uncertain parameters such as outage rates as random variables.
+    \item Bayes theorem is used to combine
+data with prior distributions that describe initial knowledge of
+the uncertainty. The prior distributions are updated with the
+available data to give a posterior distribution that describes the
+uncertainty in the parameter values given all the available data.
+   \item Bayesian methods are ideal for problems with limited data
+(such as estimation of outage rates), where it is necessary to
+use all the information available. 
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\section{Modelling line dependencies}
+\begin{frame}{Modelling line dependencies}
+\begin{block}{Historical Outage Data}
+\begin{itemize}
+    \item Data consist of transmission line outage by North American utility (Bonneville Power Administration) for 14 years since 1994.
+    \item Data include the sending end and receiving end bus name of outaged lines, voltage rating, length, outage time, district and other information.
+    \item There are 549 outages in the data with rated voltage of 69,115,230,287,345 and 500KV
+    \item Excluded 1000KV HVDC line and momentary outages.
+    \item If a line fails several times it's counted as one. 
+\end{itemize}
+
+\end{block}
+   \end{frame}
+   
+ \begin{frame}{Modelling line dependencies}
+\begin{block}{Data exploration}
+\begin{itemize}
+    \item Initially used the conventional method of dividing the number of outages by number of years.
+    \item After pooling the overall data the mean and standard deviation comes out to be 0.6 and 0.7 respectively.
+    \item The variance to mean ratio comes out to be 1.2 showing overdispersion.
+    
+\end{itemize}
+
+\end{block}
+   \end{frame}
+   
+ \begin{frame}{Modelling line dependencies}
+\begin{block}{Scaling line length and voltage ratings}
+ The line lengths and voltage ratings are transformed and scaled so that their magnitudes and variations are scale-free and comparable.
+  
+ \begin{equation}
+     x_L = \frac{ln \boldsymbol{L}}{scale(ln\boldsymbol{L})} 
+ \end{equation}
+scale(z) = meadian(z-median(z))
+ \begin{equation}
+     x_V = \frac{\boldsymbol{V}/SD(\boldsymbol{V})}{scale(\boldsymbol{V}/SD(\boldsymbol{V}))} 
+ \end{equation}
+ It is usually considered that the line length and voltage rating have a positive correlation, but the correlation is weak: the Pearson correlation coefficient is 0.34
+\end{block}
+ \end{frame}  
+ 
+ 
+  \begin{frame}{Modelling line dependencies}
+\begin{block}{Line proximity}
+\begin{itemize}
+    \item The proximity of lines is quantified by the weighted sum of
+two kernels.
+     \item The first
+kernel is based on districts. Lines in the same district are more
+likely to experience the same weather conditions.
+  \item The second kernel
+is based on network distance in terms of line length, which, to
+some extent, reflects both geographic proximity and the physical
+and engineering interactions in the power grid.
+\end{itemize}
+\end{block}
+\end{frame}    
+ 
+  \begin{frame}{Modelling line dependencies}
+\begin{block}{Line proximity - District}
+There are 12 districts, and districts for each
+line are represented by a feature vector $\phi_{dis} \in \{0, 1\}^{12}$ whose
+coordinates correspond to the districts, and are set to 1 for each
+district crossed by that line, and to 0 otherwise.
+We define district kernel as :
+\begin{equation}
+     \Sigma_1 = exp(-{\parallel \phi_{dis}(i) - \phi_{dis}(j)\parallel_2}^2 - I_{i \neq j}) 
+ \end{equation}
+where $\parallel.\parallel$ stands for two norm and $I_{i \neq j}$ is an indicator function. The kernel $\Sigma_1 $ forms a correlation matrix since it is positive definite.
+
+\end{block}
+\end{frame}   
+  
+  
+\begin{frame}{Modelling line dependencies}
+\begin{block}{Line proximity - Network distance}
+ The network distance between lines
+$L_i$ and $L_j$ along the network lines is defined as :
+
+$d_{ij}$ = d($L_{i}$,$L_{j}$) = minimum length in miles of a network path
+joining midpoint of $L_i$ to midpoint of $L_j$ . \\
+\\
+The distance of line to itself is zero and the distance
+of a line to a neighboring line with at least one bus in common
+is half of the total length of the two lines.
+\begin{equation}
+     \Sigma_2 = exp[-\frac{d(L_i,L_j)}{2}] 
+ \end{equation}
+ \\
+As d($L_i$, $L_i$)=0, the diagonal elements of $\Sigma_2$ are one.
+\end{block}
+\end{frame}  
+ 
+  
+\begin{frame}{Modelling line dependencies}
+\begin{block}{Line proximity - Combining two kernels}
+The network proximity $\Sigma$ is
+the weighted sum of above two kernels:
+\begin{equation}
+     \Sigma = \emph{w}\Sigma_1 + (1-\emph{w})\Sigma_2 
+ \end{equation}
+ \\
+Where $0 < w < 1$. For example, if the two kernels are equally
+important, then \emph{w} = 0.5
+\end{block}
+\end{frame}  
+ 
+\section{The Bayesian Hierarchical Model}  
+\begin{frame}{The Bayesian Hierarchical Model}
+\begin{block}{}
+\begin{itemize}
+    \item We assume that the outage count follows a Poisson distribution :
+
+\begin{equation}
+    \emph{N}_i \sim Poisson(\lambda_it_i), \hspace{1cm} i =1,\dots,n
+\end{equation}\\
+
+where $N_i$ is the outage count for line i over $t_i$ years,$\lambda_i$ is the annual outage rate, and n is the number of lines.
+
+\item We assume that the outage rates $\lambda_i$ follows a Gamma distribution:
+\begin{equation}
+    \emph{\lambda}_i \sim Gamma(\alpha,\alpha/\mu_i), \hspace{1cm} i =1,\dots,n
+\end{equation}\\
+The mean outage rate $\mu_i$ is modeled via a linear regression
+model with correlated lines.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{The Bayesian Hierarchical Model}
+\begin{block}{}
+\begin{itemize}
+    \item The linear regression model assumes the predicted variable is normally distributed, but $\mu_i$
+is positive and may have a large range of values, so $\mu_i$ is
+transformed by a log function :
+
+\begin{equation}
+    \ln\boldsymbol{\mu} = \beta_0+\beta_L\emph{x}_L + \beta_V\emph{x}_V
+\end{equation}\\
+
+Where $\mu$, $\beta_0$ are column vector
+\item $\beta_0$ follows a multi variable normal distribution
+\begin{equation}
+    \beta_0 \sim \mathcal{N}(m\boldsymbol{1},\sigma^2(\emph{w}\Sigma_1 + (1-\emph{w})\Sigma_2))
+\end{equation}\\
+\item Line dependencies are captured by the covariance matrix of this
+multivariate normal distribution, $\sigma^2$ is a scalar which controls
+the magnitude of the covariance and w controls the weights of
+the two kernels.
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}{The Bayesian Hierarchical Model}
+\begin{block}{}
+\begin{itemize}
+    \item The parameters $\alpha$, $\beta_V$ , $\beta_L$ , $\emps{w}$, $\sigma^2$ and $\emps{m}$ will be
+estimated using prior distributions in combination with the data
+as described below.
+The prior distributions are:
+
+
+\begin{equation}
+\begin{split}
+\alpha &\sim \text{Half Normal}(0.7,8^2) \\
+\emph{m} &\sim Normal(-1.5,5^2)\\
+\sigma^2 &\sim \text{Half Normal}(0,0.5^2)\\
+\beta_L &\sim Normal(0.13,5^2)\\
+\beta_V &\sim Normal(0.12,5^2)\\
+\emph{w} &\sim Beta(1,1)
+\end{split}   
+\end{equation}
+
+\item These priors are set to ensure that the parameters have a reasonable range and/or mean when compared to our knowledge
+about the system.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{The Bayesian Hierarchical Model}
+\begin{block}{Summary of Bayesian model}
+\begin{itemize}
+    \item We now summarize the Bayesian hierarchical model. The
+Bayesian hierarchical model is specified by (6,7,8,9) together with the prior distribution of the parameters (10). Note
+that the partial dependencies between the lines are expressed in
+(8,9).
+ \item The model parameters, including the outage rates $\lambda$, are :
+\begin{equation}
+  \theta = (\lambda, \mu, \beta_0, \alpha, \beta_L, \beta_V ,\emps{m}, \emps{w} )
+\end{equation}
+
+
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}{The Bayesian Hierarchical Model}
+\begin{block}{Summary of Bayesian model}
+\begin{itemize}
+    \item The objective is to estimate the posterior distribution of the
+parameters $\pr{\theta|\boldsymbol{\emps{N}}}$ that is informed by the line outage counts
+$\boldsymbol{\emps{N}}$.
+ \item  By Bayes’ theorem, the posterior distribution :
+\begin{equation}
+  \pr{\theta|\boldsymbol{\emps{N}}} = \frac{\pr{\boldsymbol{\emps{N}}|\theta}\times \pr{\theta}}{\pr{\boldsymbol{\emps{N}}}}
+\end{equation}
+
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{The Bayesian Hierarchical Model}
+\begin{block}{Summary of Bayesian model}
+\begin{itemize}
+    \item Normalization can be applied later, it is sufficient to
+calculate the unnormalized numerator of (12). We can exploit
+the dependencies in the hierarchical model (7,8,9) to get
+parameters : 
+\begin{equation}
+ \pr{\boldsymbol{\emps{N}}|\theta} = \pr{\boldsymbol{\emps{N}}|\lambda} = \prod_{i} \pr{\emps{N}_i|\lambda_i}
+\end{equation}
+
+\begin{equation}
+\resizebox{0.9\hsize}{!}{
+    \pr{\theta} = \prod_{i} \pr{\lambda_i|\alpha,\mu_i}\pr{\boldsymbol{\mu}|\beta_0,\beta_L,\beta_V}\pr{\beta_0|m,w}\times \pr{\alpha}\pr{\beta_L}\pr{\beta_V}\pr{m}\pr{w}}
+\end{equation} 
+so that 
+
+\begin{equation}
+    \pr{\boldsymbol{\theta}|\boldsymbol{N}} \propto \pr{\boldsymbol{N}|\theta}\pr{\theta}\\
+    \propto \prod_{i} \pr{\emps{N}_i|\lambda_i} \prod_{i} \pr{\lambda_i|\alpha,\mu_i}\pr{\boldsymbol{\mu}|\beta_0,\beta_L,\beta_V}\pr{\beta_0|m,w}\times \pr{\alpha}\pr{\beta_L}\pr{\beta_V}\pr{m}\pr{w}
+\end{equation}
+\end{itemize}
+\end{block}
+\end{frame}
+\section{Bayesian processing on real data}
+\begin{frame}{Bayesian processing on real data}
+\begin{block}{Sampling Process}
+The Bayesian hierarchical model described in the previous
+section is applied to the historical outage data
+\begin{itemize}
+    \item The posterior distributions (15) of the parameters (11) can
+be evaluated numerically by repeated sampling from the distribution with a Monte Carlo Markov Chain (MCMC) algorithm.
+\item Software Stan was used, which implements MCMC as Hamiltonian Monte Carlo (HMC) 
+
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}{Bayesian processing on real data}
+\begin{block}{Results of Bayesian estimates}
+\begin{itemize}
+  \item
+The posterior distributions of βL and βV and their correlation, we see a very weak correlation which is reasonable as $x_L$ and $x_V$ have very weak correlation.
+\end{itemize}
+\end{block}
+\begin{figure}
+    \centering
+    \subfloat[Distribution of $\beta_L$ and $\beta_V$]{{\includegraphics[width=5cm]{har.png} }}
+    \qquad
+    \subfloat[Scatter plot and co relation of $\beta_L$ and $\beta_V$]{{\includegraphics[width=5cm]{har1.png} }}
+    \label{fig:example}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}{Bayesian processing on real data}
+\begin{block}{Results of Bayesian estimates}
+\begin{itemize}
+  \item The conventional method estimates the
+outage rate with the sample mean. The standard deviation of the
+sample mean can be estimated as s/$\sqrt{n}$, where s is the sample
+standard deviation, and n is the sample size.
+\item The standard
+deviation of the Bayesian estimator is typically smaller than the
+conventional estimator, especially when the data is limited to
+one year. 
+\item The median ratio of standard deviations is 0.66 for one
+year of data, while the median ratio is 0.93 for 14 years of data.
+\item the Bayes estimator using one year of data achieves the
+same standard deviation as the conventional estimator using
+2.30 years of data (1/(0.662)=2.30). 
+\item One advantage of the Bayesian method is that it provides a
+principled way of making line outage rates with no observed
+outages.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\section{Test Bayesian estimate on synthetic data}
+\begin{frame}{Test Bayesian estimate on synthetic data}
+\begin{block}{}
+\begin{itemize}
+  \item Build a generative model for synthetic datasets of arbitrary
+size, so the data are not limited in size, and the ground truth
+values are known.
+\item  Then test the Bayesian hierarchical model
+and the conventional estimates on the synthetic data.
+\item  Generate three datasets with different sizes so that we have
+the equivalents of 1-year, 5-year, and 100-year data. 
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}{Test Bayesian estimate on synthetic data}
+\begin{block}{}
+\begin{itemize}
+  \item The less the data the wider the histogram, as the data increases the two modes merges into one.
+  \item For 1-year data, the standard deviation of the error is 0.6 for
+Bayesian estimates and 0.9 for conventional estimates; for 5-year
+data, the standard deviation is 0.3 for Bayesian estimates and 0.4
+for conventional estimates.
+\end{itemize}
+\begin{figure}
+    \centering
+    \subfloat[Distributions of point estimation errors of Bayes estimates and conventional estimates using 1-year data]{{\includegraphics[width=5cm]{her.png} }}
+    \qquad
+    \subfloat[Distributions of point estimation errors of Bayes estimates and conventional estimates using 5-year data]{{\includegraphics[width=5cm]{her1.png} }}
+    \label{fig:example}
+\end{figure}
+\end{block}
+\end{frame}
+
+\section{ Conclusion and Improvements}
+\begin{frame}{Conclusion}
+\begin{block}{}
+\begin{itemize}
+
+
+\item We use a Bayesian hierarchical model to improve the estimation of annual outage rates for individual transmission lines.
+\item This
+Bayesian method incorporates several types of dependencies
+between lines and is applied to real outage data and tested with
+synthetic data.
+
+\item  For the shorter observation periods
+with the lower outage counts, the Bayesian estimates perform
+better than the conventional estimates.
+
+\item Our Bayesian hierarchical model offers an improvement over
+the conventional estimates for two reasons.  
+\begin{itemize}
+    \item The Bayesian
+method can appropriately capture our prior knowledge of the parameter uncertainties with prior distributions.
+
+  \item The model is hierarchical and models the dependence between
+lines, information about multiple partial commonalities can be
+appropriately shared across similar lines.
+\end{itemize}
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+
+
+
+
+\begin{frame}{Conclusion}
+\begin{block}{}
+\begin{itemize}
+  \item For correlated line with respect to the geographical dependencies we model these line dependencies as a covariance matrix in
+the Bayesian hierarchical model.
+\item The covariance matrix is the
+weighted sum of two kernels that represent geographic district
+commonalities and network line proximity, respectively
+
+\item The results for our data are that
+individual line outage rates are only partially correlated with the
+line length or the voltage rating. Therefore, it is more reasonable to consider the outage rate for a whole line instead of the rate
+per mile.
+\item When data is limited, which is generally true for power system
+outage data, Bayesian estimates have smaller uncertainty than
+conventional estimates.
+
+
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}{Conclusion}
+\begin{block}{}
+\begin{itemize}
+
+
+\item With a specific acceptable
+standard deviation, the proposed Bayesian method needs less
+data than the conventional method.
+\item For example, if utilities need two years of data
+using the conventional method to estimate line outage rates with
+a given uncertainty, they typically only need one year of data
+using the proposed Bayesian method to obtain an outage rate
+estimate that meets the same uncertainty requirement
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Improvements}
+\begin{block}{}
+\begin{itemize}
+
+
+\item Further advantage could be gained by including other factors
+such as average wind speed or altitude.
+\item The proposed
+Bayesian method can naturally be extended to investigate line
+outage rates for specific causes.
+\end{itemize}
+\end{block}
+\end{frame}
+\end{document}
